@@ -79,6 +79,10 @@ def home():
     return jsonify({"message": "🚀 Flask API is running successfully!"})
 
 # ✅ Prediction Route
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({"message": "🚀 Flask API is running successfully!"})
+
 @app.route("/predict", methods=["POST"])
 def predict():
     if model is None:
@@ -91,6 +95,7 @@ def predict():
     except Exception as e:
         logger.error(f"❌ ERROR: {str(e)}")
         return jsonify({"error": str(e)}), 400
+
 
 # ✅ Run Flask App
 if __name__ == "__main__":
