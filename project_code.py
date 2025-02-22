@@ -82,21 +82,3 @@ try:
 except FileNotFoundError:
     logger.error("ERROR: 'f1_model.pkl' not found. Train the model first.")
     model = None
-
-# Flask API Routes
-@app.route("/predict", methods=["POST"])
-def predict():
-    if model is None:
-        return jsonify({"error": "Model not found! Train the model first."}), 500
-    try:
-        data = request.get_json()
-        features = np.array(data["features"]).reshape(1, -1)
-        prediction = model.predict(features)[0]
-        return jsonify({"predicted_lap_time": round(prediction, 2)})
-    except Exception as e:
-        logger.error(f"ERROR: {str(e)}")
-        return jsonify({"error": str(e)}), 400
-
-# Run Flask App
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
